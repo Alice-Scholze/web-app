@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index
+  def index    
     render json: permited_params[:id]
   end
 
