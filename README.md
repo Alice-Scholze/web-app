@@ -20,3 +20,37 @@ kubectl apply -f manifests/service.yaml
 kubectl apply -f manifests/hpa.yaml
 ```
 
+- Get deployment
+```
+kubectl get deployments
+```
+
+- Remove deployment
+```
+kubectl delete deployment web-app-deployment
+```
+
+- Get services
+```
+kubectl get services
+```
+
+- Remove services
+```
+kubectl delete service web-app-service
+
+```
+
+- Get hpa
+```
+kubectl get hpa
+```
+
+- Remove hpa
+```
+kubectl delete hpa cpu
+
+```
+
+## Endpoints
+
