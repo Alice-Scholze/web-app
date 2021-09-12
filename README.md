@@ -23,12 +23,13 @@ kubectl apply -f manifests/hpa.yaml
 ```
 
 ### Setting cluster without hpa
-- Set your deploymnet, service and hpa with:
+- Set your deploymnet, service:
 ```
 kubectl apply -f manifests/phpa-deployment.yaml
 kubectl apply -f manifests/phpa-service.yaml
 ```
 
+### Helpful commands
 
 - Get deployment
 ```
