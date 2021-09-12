@@ -73,5 +73,68 @@ kubectl scale deployment.v1.apps/phpa-web-app-deployment --replicas=3
 kubectl get deploy
 ```
 
+### Install prometheus
+
+- Install heml
+```
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+sudo apt-get install apt-transport-https --yes
+echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
+```
+
+- Add prometheus
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+```
+
+- Create namespace
+```
+kubectl create ns monitor
+```
+
+- Add chart
+```
+# You can change 'metrics' name that one you want
+helm install metrics prometheus-community/prometheus --namespace monitor
+```
+
+- Remove chart
+```
+helm uninstall metrics
+```
+
+- Access prometheus by port foward
+```
+export POD_NAME=$(kubectl get pods --namespace monitor -l "app=prometheus,component=pushgateway" -o jsonpath="{.items[0].metadata.name}")
+kubectl --namespace monitor port-forward $POD_NAME 9091
+```
+
+- List services by monitor namespace
+```
+kubectl --namespace monitor get svc
+```
+
+## Grafana
+```
+kubectl create -f manifests/grafana-datasource-config.yaml
+```
+
+```
+kubectl get configmap
+```
+
+```
+kubectl create -f manifests/grafana-deployment.yaml
+```
+
+```
+kubectl create -f manifests/grafana-service.yaml 
+```
+
+
 ## Endpoints
 
