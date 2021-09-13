@@ -100,14 +100,21 @@ kubectl create ns monitor
 ```
 # You can change 'metrics' name that one you want
 helm install metrics prometheus-community/prometheus --namespace monitor
+helm install metrics prometheus-community/prometheus --namespace monitor --set server.service.type=LoadBalancer
 ```
 
 - Remove chart
 ```
-helm uninstall metrics
+helm uninstall metrics --namespace monitor
 ```
 
-- Access prometheus by port foward
+- Get the Prometheus server URL by running these commands in the same shell:
+```
+export POD_NAME=$(kubectl get pods --namespace monitor -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
+kubectl --namespace monitor port-forward $POD_NAME 9090
+```
+
+- Get the PushGateway URL by running these commands in the same shell:
 ```
 export POD_NAME=$(kubectl get pods --namespace monitor -l "app=prometheus,component=pushgateway" -o jsonpath="{.items[0].metadata.name}")
 kubectl --namespace monitor port-forward $POD_NAME 9091
@@ -134,7 +141,6 @@ kubectl create -f manifests/grafana-deployment.yaml
 ```
 kubectl create -f manifests/grafana-service.yaml 
 ```
-
 
 ## Endpoints
 
