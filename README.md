@@ -66,6 +66,7 @@ kubectl delete hpa cpu
 - Update replicas number
 ```
 kubectl scale deployment.v1.apps/phpa-web-app-deployment --replicas=3
+kubectl --namespace monitor scale deployment.v1.apps/metrics-prometheus-server --replicas=1
 ```
 
 - Get deploy data
@@ -99,13 +100,31 @@ kubectl create ns monitor
 - Add chart
 ```
 # You can change 'metrics' name that one you want
-helm install metrics prometheus-community/prometheus --namespace monitor
 helm install metrics prometheus-community/prometheus --namespace monitor --set server.service.type=LoadBalancer
+```
+
+- Add aplication metrics to prometheus
+```
+# Go to your prometheus-server
+kubectl --namespace monitor edit cm metrics-prometheus-server
+
+# Edit your jobs to include application
+- job_name: batata
+  static_configs:
+  - targets:
+    - phpa-web-app-service.default.svc.cluster.local:3000
+  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
 ```
 
 - Remove chart
 ```
 helm uninstall metrics --namespace monitor
+helm uninstall my-release --namespace monitor
+```
+
+- Remove all from namespane
+```
+kubectl delete all --all -n monitor
 ```
 
 - Get the Prometheus server URL by running these commands in the same shell:

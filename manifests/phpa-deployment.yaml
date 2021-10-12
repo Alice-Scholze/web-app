@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: phpa-web-app
-        image: alicescholze/web-app:v2
+        image: alicescholze/web-app:v3
         ports:
         - containerPort: 3000
