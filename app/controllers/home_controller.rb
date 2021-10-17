@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   def test
     start = Time.now
     
-    sleep(1.seconds)
+    sleep(0.2)
     
     end_time = Time.now
 
