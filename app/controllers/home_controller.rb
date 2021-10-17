@@ -6,9 +6,13 @@ class HomeController < ApplicationController
   end
 
   def test
-    bubble_sort
+    start = Time.now
     
-    render json: {'olá': Time.now}.as_json
+    sleep(1.seconds)
+    
+    end_time = Time.now
+
+    render json: {'start': start, 'end': end_time, 'diff': end_time - start}.as_json
   end
 
   private
