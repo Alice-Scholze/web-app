@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: web-app
-        image: alicescholze/web-app:v5
+        image: alicescholze/web-app:v6
         ports:
         - containerPort: 3000
         resources:
